@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tribe Creatives — Events & Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/x-icon" href="assets/Icons-Logos/TC-ICON.png">  
+  <style>
+    :root {
+      --green: #1D5B3A;
+      --purple: #6B2D8C;
+      --gold: #B89958;
+      --berry: #7D5BA6;
+      --dark: #1A1A1A;
+      --cream: #FAFAF7;
+      --white: #FFFFFF;
+      --light-green: #edf4f0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+
+    @font-face {
+      font-family: 'Hello Paris';
+      src: url('assets/Fonts/Hello Paris Sans Medium.ttf') format('truetype');
+      font-weight: 500; font-style: normal;
+    }
+    @font-face {
+      font-family: 'Hello Paris';
+      src: url('assets/Fonts/Hello Paris Sans Bold.ttf') format('truetype');
+      font-weight: 700; font-style: normal;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: rgba(250,250,247,0.96); backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(184,153,88,0.25);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.75rem 2rem; transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(29,91,58,0.1); }
+    .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .nav-logo img { height: 52px; width: 52px; object-fit: contain; }
+    .nav-brand { display: flex; flex-direction: column; line-height: 1.1; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
+    .nav-brand.visible { opacity: 1; pointer-events: all; }
+    .nav-brand .tribe { font-family: 'Hello Paris', sans-serif; font-size: 2.2rem; font-weight: 700; color: var(--purple); letter-spacing: 0.1em; }
+    .nav-brand .creatives { font-family: 'Hello Paris', sans-serif; font-size: 1.5rem; font-weight: 500; color: var(--green); letter-spacing: 0.01em; margin-top: -10px; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; color: var(--gold); position: relative; padding-bottom: 3px; transition: color 0.2s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background: var(--purple); transition: width 0.3s ease; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-links a:hover::after { width: 100%; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 25px; height: 2px; background: var(--green); transition: all 0.3s; }
+    .mobile-menu { display: none; position: fixed; top: 72px; left: 0; right: 0; background: rgba(250,250,247,0.98); backdrop-filter: blur(12px); padding: 1.5rem 2rem 2rem; z-index: 998; border-bottom: 1px solid rgba(184,153,88,0.25); flex-direction: column; gap: 1.25rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; font-size: 1rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; color: var(--dark); padding: 0.5rem 0; border-bottom: 1px solid rgba(184,153,88,0.15); transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--green); }
+
+    /* HERO */
+    #home { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 7rem 2rem 5rem; position: relative; overflow: hidden; background-color: var(--cream); }
+    .hero-ring-light { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; z-index: 0; }
+    .hero-ring-light-1 { width: 700px; height: 700px; border: 1px solid rgba(184,153,88,0.1); }
+    .hero-ring-light-2 { width: 520px; height: 520px; border: 1px solid rgba(184,153,88,0.08); }
+    .hero-ring-light-3 { width: 880px; height: 880px; border: 1px solid rgba(107,45,140,0.05); }
+    .hero-glow { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(184,153,88,0.06) 0%, transparent 70%), radial-gradient(ellipse 40% 35% at 20% 80%, rgba(29,91,58,0.04) 0%, transparent 60%), radial-gradient(ellipse 35% 30% at 80% 20%, rgba(107,45,140,0.04) 0%, transparent 60%); }
+    .hero-mesh-light { position: absolute; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(184,153,88,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(184,153,88,0.025) 1px, transparent 1px); background-size: 60px 60px; }
+    .hero-content { position: relative; z-index: 2; max-width: 820px; margin: 0 auto; }
+    .hero-wordmark { margin-bottom: 0.25rem; animation: fadeUp 0.9s 0.25s ease both; line-height: 1.05; }
+    .hero-wordmark-tribe, .hero-wordmark-be { font-family: 'Hello Paris', sans-serif; font-size: clamp(5rem, 10vw, 8rem); font-weight: 500; color: var(--purple); letter-spacing: .03em; display: inline; line-height: 1; }
+    .hero-wordmark-creatives { font-family: 'Hello Paris', sans-serif; font-size: clamp(4.5rem, 8.5vw, 6rem); font-weight: 700; color: var(--green); letter-spacing: 0.01em; display: block; margin-top: -40px; }
+    .hero-location { display: inline-flex; align-items: center; gap: 1rem; margin: 1.5rem 0 1.75rem; animation: fadeUp 0.9s 0.4s ease both; }
+    .hero-location-line { width: 60px; height: 1px; background: var(--gold); opacity: 0.7; }
+    .hero-location span { font-family: 'Lato', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); }
+    .hero-tagline-light { font-family: 'Playfair Display', serif; font-size: clamp(1.35rem, 3vw, 1.85rem); font-weight: 600; font-style: italic; color: var(--gold); letter-spacing: 0.02em; margin-bottom: 1.5rem; animation: fadeUp 0.9s 0.5s ease both; line-height: 1.4; }
+    .hero-desc-light { font-size: clamp(0.92rem, 1.8vw, 1.05rem); color: #555; max-width: 620px; margin: 0 auto 2.5rem; line-height: 1.85; font-weight: 300; animation: fadeUp 0.9s 0.6s ease both; }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.9s 0.72s ease both; }
+
+    /* BUTTONS */
+    .btn-primary { background: var(--green); color: white; padding: 0.85rem 2.25rem; border: none; font-family: 'Lato', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; text-decoration: none; cursor: pointer; transition: background 0.25s, transform 0.2s, box-shadow 0.25s; box-shadow: 0 4px 20px rgba(29,91,58,0.3); display: inline-block; }
+    .btn-primary:hover { background: #164a2d; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(29,91,58,0.35); }
+    .btn-outline { background: transparent; color: var(--gold); padding: 0.85rem 2.25rem; border: 1.5px solid rgba(184,153,88,0.7); font-family: 'Lato', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; text-decoration: none; cursor: pointer; transition: all 0.25s; display: inline-block; }
+    .btn-outline:hover { background: var(--purple); color: white; border-color: var(--purple); transform: translateY(-2px); }
+    button:disabled { opacity: 0.65; cursor: not-allowed; transform: none !important; }
+
+    /* SECTIONS */
+    section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 0.75rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 600; color: var(--green); line-height: 1.2; margin-bottom: 1.5rem; }
+    .section-title em { font-style: italic; color: var(--purple); }
+    .section-divider { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2.5rem; }
+    .section-divider::after { content: ''; flex: 1; max-width: 120px; height: 1px; background: linear-gradient(to right, var(--gold), transparent); }
+    .section-divider-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+
+    /* SERVICES */
+    #services { background: #b89a580c; }
+    .services-header { text-align: center; margin-bottom: 4rem; }
+    .services-header .section-divider { justify-content: center; }
+    .services-header .section-divider::before { content: ''; flex: 1; max-width: 120px; height: 1px; background: linear-gradient(to left, var(--gold), transparent); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .service-card { position: relative; overflow: hidden; border: 1px solid rgba(184,153,88,0.15); min-height: 420px; display: flex; flex-direction: column; justify-content: flex-end; transition: transform 0.35s, box-shadow 0.35s; }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.25); }
+    .svc-bg { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; transition: transform 0.5s ease; }
+    .service-card:hover .svc-bg { transform: scale(1.05); }
+    .svc-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(20,20,20,0.88) 0%, rgba(20,20,20,0.45) 55%, rgba(20,20,20,0.1) 100%); transition: background 0.35s; }
+    .service-card:hover .svc-overlay { background: linear-gradient(to top, rgba(20,20,20,0.92) 0%, rgba(20,20,20,0.55) 60%, rgba(20,20,20,0.15) 100%); }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(to right, var(--green), var(--purple)); z-index: 3; transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+    .service-card:hover::before { transform: scaleX(1); }
+    .svc-content { position: relative; z-index: 2; padding: 1.75rem 1.75rem 0; display: flex; flex-direction: column; }
+    .svc-price-badge { position: absolute; top: 1.1rem; right: 1.1rem; z-index: 4; background: rgba(184,153,88,0.92); backdrop-filter: blur(4px); color: white; padding: 0.32rem 0.85rem; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; }
+    .svc-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 1.1rem; backdrop-filter: blur(4px); }
+    .svc-icon svg { width: 22px; height: 22px; }
+    .svc-content h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600; color: white; margin-bottom: 0.55rem; }
+    .svc-content > p { font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.65; font-weight: 300; margin-bottom: 0.85rem; }
+    .service-tag { font-size: 0.67rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 700; border-top: 1px solid rgba(184,153,88,0.3); padding-top: 0.65rem; margin-bottom: 1rem; display: block; }
+    .btn-view-details { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 0.8rem 1rem; background: transparent; color: rgba(255,255,255,0.85); border: 1px solid rgba(184,153,88,0.45); font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.3s ease; margin-bottom: 1.75rem; position: relative; overflow: hidden; }
+    .btn-view-details::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(29,91,58,0) 0%, rgba(29,91,58,0.6) 50%, rgba(29,91,58,0) 100%); transform: translateX(-100%); transition: transform 0.4s ease; }
+    .btn-view-details:hover::before { transform: translateX(100%); }
+    .btn-view-details:hover { border-color: rgba(184,153,88,0.9); color: var(--gold); box-shadow: 0 0 24px rgba(184,153,88,0.15); }
+    .btn-view-details svg { width: 14px; height: 14px; transition: transform 0.3s; flex-shrink: 0; }
+    .btn-view-details:hover svg { transform: translateX(4px); }
+    .svc-bg-planning { background-color: #1a2e20; background-image: url('assets/fullevent-planning.jpg'); }
+    .svc-bg-design   { background-color: #251828; background-image: url('assets/designandstyling.jpg'); }
+    .svc-bg-vendor   { background-color: #1a2030; background-image: url('assets/vendorcoordination.jpg'); }
+    .svc-bg-debut    { background-color: #1e1525; background-image: url('assets/day-off coordination.jpg'); }
+    .svc-bg-dayof    { background-color: #0f1e16; background-image: url('assets/debutcelebration.jpg'); }
+    .svc-bg-custom   { background-color: #1d1520; background-image: url('assets/custom-celebration.jpg'); }
+
+    /* PORTFOLIO */
+    #portfolio { background: var(--green); color: white; }
+    #portfolio .section-title { color: var(--gold); }
+    #portfolio .section-label { color: rgba(184,153,88,0.8); }
+    .showcase-header { text-align: center; margin-bottom: 3.5rem; }
+    .showcase-header .section-divider { justify-content: center; }
+    .showcase-header .section-divider::before { content: ''; flex: 1; max-width: 120px; height: 1px; background: linear-gradient(to left, rgba(184,153,88,0.5), transparent); }
+    .showcase-header .section-divider::after { background: linear-gradient(to right, rgba(184,153,88,0.5), transparent); }
+    .showcase-header .section-divider-dot { background: var(--gold); }
+    .portfolio-carousel-wrap { position: relative; max-width: 760px; margin: 0 auto; }
+    .portfolio-frame { position: relative; width: 100%; aspect-ratio: 4/3; background: rgba(255,255,255,0.04); border: 1px solid rgba(184,153,88,0.25); overflow: hidden; }
+    .portfolio-track-outer { width: 100%; height: 100%; overflow: hidden; position: relative; }
+    .portfolio-track { display: flex; height: 100%; transition: transform 0.55s cubic-bezier(0.65,0,0.35,1); will-change: transform; }
+
+    /* ─────────────────────────────────────────────────────────────
+       FIX: position:relative anchors the absolutely-positioned
+       .portfolio-caption to THIS slide, not to the page.
+       Without this, captions on slides 2+ drift to the page bottom.
+    ───────────────────────────────────────────────────────────── */
+    .portfolio-slide {
+      flex: 0 0 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.15);
+      position: relative; /* THE FIX */
+    }
+    .portfolio-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .portfolio-slide.is-placeholder { flex-direction: column; gap: 0.75rem; color: rgba(255,255,255,0.4); }
+    .portfolio-slide.is-placeholder svg { width: 48px; height: 48px; opacity: 0.5; }
+    .portfolio-slide.is-placeholder span { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; }
+    .portfolio-caption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; background: linear-gradient(to top, rgba(10,20,14,0.88), transparent); padding: 2rem 1.75rem 1.1rem; pointer-events: none; }
+    .portfolio-caption span { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); font-weight: 700; display: block; margin-bottom: 0.3rem; }
+    .portfolio-caption p { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: white; }
+    .portfolio-controls { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
+    .portfolio-btn { width: 44px; height: 44px; background: transparent; border: 1.5px solid rgba(184,153,88,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s; color: var(--gold); }
+    .portfolio-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--green); }
+    .portfolio-btn svg { width: 18px; height: 18px; }
+    .portfolio-dots { display: flex; gap: 0.55rem; }
+    .portfolio-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.25); border: none; cursor: pointer; transition: background 0.25s, transform 0.25s; padding: 0; }
+    .portfolio-dot.active { background: var(--gold); transform: scale(1.3); }
+    .showcase-coming { text-align: center; margin-top: 2.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.5); font-weight: 300; letter-spacing: 0.1em; }
+    .btn-see-more { display: block; margin: 1.5rem auto 0; background: transparent; color: var(--gold); padding: 0.8rem 2.4rem; border: 1.5px solid rgba(184,153,88,0.55); font-family: 'Lato', sans-serif; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: all 0.25s; width: fit-content; }
+    .btn-see-more:hover { background: var(--gold); color: var(--green); border-color: var(--gold); transform: translateY(-2px); }
+
+    /* TESTIMONIALS */
+    #testimonials { background: var(--white); overflow: hidden; }
+    .testimonials-header { text-align: center; margin-bottom: 3.5rem; }
+    .testi-carousel-wrap { position: relative; max-width: 560px; margin: 0 auto; }
+    .testi-frame { position: relative; background: var(--cream); border: 1px solid rgba(184,153,88,0.2); box-shadow: 0 20px 50px rgba(29,91,58,0.08); padding: 1.5rem; }
+    .testi-frame::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 5rem; color: rgba(184,153,88,0.15); line-height: 0.6; position: absolute; top: 0.6rem; left: 1rem; z-index: 0; }
+    .testi-track-outer { overflow: hidden; position: relative; z-index: 1; }
+    .testi-track { display: flex; transition: transform 0.55s cubic-bezier(0.65,0,0.35,1); will-change: transform; }
+    .testi-slide { flex: 0 0 100%; display: flex; align-items: center; justify-content: center; padding: 0 0.25rem; }
+    .testi-slide img { width: 100%; max-height: 460px; object-fit: contain; background: white; border: 1px solid rgba(184,153,88,0.12); display: block; }
+    .testi-controls { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 2.25rem; }
+    .testi-btn { width: 44px; height: 44px; background: transparent; border: 1.5px solid rgba(184,153,88,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s; color: var(--gold); }
+    .testi-btn:hover { background: var(--green); border-color: var(--green); color: white; }
+    .testi-btn svg { width: 18px; height: 18px; }
+    .testi-dots { display: flex; gap: 0.55rem; }
+    .testi-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(184,153,88,0.25); border: none; cursor: pointer; transition: background 0.25s, transform 0.25s; padding: 0; }
+    .testi-dot.active { background: var(--gold); transform: scale(1.3); }
+    .testi-source { text-align: center; margin-top: 1.5rem; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--berry); font-weight: 700; }
+
+    /* ABOUT */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-image-wrap { position: relative; }
+    .about-img-placeholder { width: 100%; aspect-ratio: 4/5; background: linear-gradient(135deg, var(--light-green) 0%, rgba(107,45,140,0.08) 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .about-img-placeholder::before { content: ''; position: absolute; inset: 20px; border: 1px solid rgba(184,153,88,0.3); }
+    .about-img-placeholder img { width: 55%; opacity: 0.35; filter: grayscale(0.2); }
+    .about-accent-box { position: absolute; bottom: -1.5rem; right: -1.5rem; background: var(--green); color: white; padding: 1.75rem 2rem; text-align: center; }
+    .about-accent-box .num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--gold); display: block; line-height: 1; }
+    .about-accent-box .label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; margin-top: 0.25rem; display: block; }
+    .about-text p { font-size: 1.05rem; line-height: 1.85; color: #444; font-weight: 300; margin-bottom: 1.25rem; }
+    .about-pillars { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+    .pillar { display: flex; align-items: flex-start; gap: 1rem; }
+    .pillar-icon { width: 36px; height: 36px; background: var(--light-green); border: 1px solid rgba(29,91,58,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pillar-icon svg { width: 16px; height: 16px; }
+    .pillar-text strong { display: block; font-size: 0.85rem; font-weight: 700; color: var(--green); letter-spacing: 0.05em; margin-bottom: 0.2rem; }
+    .pillar-text span { font-size: 0.9rem; color: #666; font-weight: 300; }
+
+    /* CONTACT */
+    #contact { background: linear-gradient(135deg, var(--light-green) 0%, rgba(107,45,140,0.04) 100%); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contact-info h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 600; color: var(--green); margin-bottom: 1rem; line-height: 1.2; }
+    .contact-info h2 em { color: var(--purple); font-style: italic; }
+    .contact-info p { font-size: 1rem; color: #555; line-height: 1.75; font-weight: 300; margin-bottom: 2.5rem; }
+    .contact-details { display: flex; flex-direction: column; gap: 1.25rem; }
+    .contact-row { display: flex; align-items: flex-start; gap: 1rem; }
+    .contact-row-icon { width: 42px; height: 42px; background: var(--white); border: 1px solid rgba(184,153,88,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .contact-row-icon svg { width: 18px; height: 18px; }
+    .contact-row-text a, .contact-row-text span { display: block; font-size: 0.9rem; color: #444; text-decoration: none; font-weight: 300; transition: color 0.2s; }
+    .contact-row-text a:hover { color: var(--green); }
+    .contact-row-text strong { display: block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 0.2rem; }
+    .contact-form-wrap { background: var(--white); border: 1px solid rgba(184,153,88,0.15); padding: 3rem 2.5rem; }
+    .contact-form-wrap h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--green); margin-bottom: 2rem; font-weight: 600; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dark); font-weight: 700; margin-bottom: 0.5rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.85rem 1rem; border: 1px solid rgba(0,0,0,0.12); background: var(--cream); font-family: 'Lato', sans-serif; font-size: 0.92rem; color: var(--dark); font-weight: 300; outline: none; transition: border-color 0.2s; appearance: none; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--green); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* FOOTER */
+    footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 3rem 2rem 2rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
+    .footer-logo { display: flex; align-items: center; gap: 0.85rem; }
+    .footer-logo-img-wrap { width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .footer-logo-img-wrap img { width: 100%; height: 100%; object-fit: contain; opacity: 0.9; display: block; }
+    .footer-brand { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.3; }
+    .footer-brand .tribe { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; white-space: nowrap; }
+    .footer-brand .creatives { font-family: 'Playfair Display', serif; font-size: 0.72rem; color: rgba(184,153,88,0.65); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
+    .footer-motto { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(184,153,88,0.5); }
+    .footer-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.08); }
+    .footer-bottom { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .footer-bottom a { color: rgba(184,153,88,0.5); text-decoration: none; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* SERVICE DETAIL MODAL */
+    .svc-detail-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(10,10,10,0.82); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+    .svc-detail-overlay.active { opacity: 1; pointer-events: all; }
+    .svc-detail-modal { background: var(--white); width: 100%; max-width: 1060px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; position: relative; transform: translateY(32px) scale(0.97); transition: transform 0.4s cubic-bezier(0.34,1.2,0.64,1); box-shadow: 0 40px 100px rgba(0,0,0,0.45); }
+    .svc-detail-overlay.active .svc-detail-modal { transform: translateY(0) scale(1); }
+    .sdm-header { background: linear-gradient(135deg, var(--green) 0%, #143d26 100%); padding: 1.4rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; border-bottom: 1px solid rgba(184,153,88,0.2); }
+    .sdm-header-left { display: flex; align-items: center; gap: 1.2rem; }
+    .sdm-service-eyebrow { font-size: 0.65rem; letter-spacing: 0.38em; text-transform: uppercase; color: rgba(184,153,88,0.7); font-weight: 700; display: block; margin-bottom: 0.2rem; }
+    .sdm-service-name { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 600; color: white; line-height: 1.2; }
+    .sdm-page-counter { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(184,153,88,0.3); padding: 0.3rem 0.9rem; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 700; white-space: nowrap; }
+    .sdm-close { width: 34px; height: 34px; border: none; cursor: pointer; background: rgba(255,255,255,0.12); color: white; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; margin-left: 1rem; }
+    .sdm-close:hover { background: rgba(255,255,255,0.25); }
+    .sdm-body { display: grid; grid-template-columns: 1fr 1fr; flex: 1; min-height: 0; overflow: hidden; }
+    .sdm-info-col { padding: 0; display: flex; flex-direction: column; border-right: 1px solid rgba(184,153,88,0.12); overflow: hidden; }
+    .sdm-info-track-outer { overflow: hidden; flex: 1; position: relative; }
+    .sdm-info-track { display: flex; height: 100%; transition: transform 0.45s cubic-bezier(0.65,0,0.35,1); will-change: transform; }
+    .sdm-info-page { flex: 0 0 100%; min-width: 0; padding: 2rem 2rem 1.5rem; display: flex; flex-direction: column; overflow-y: auto; }
+    .sdm-event-type-label { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 0.85rem; }
+    .sdm-event-type-label::before { content: ''; width: 20px; height: 1px; background: var(--gold); opacity: 0.6; }
+    .sdm-event-title { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 600; color: var(--green); line-height: 1.25; margin-bottom: 1rem; }
+    .sdm-price-block { display: inline-flex; align-items: baseline; gap: 0.4rem; background: var(--light-green); border-left: 3px solid var(--green); padding: 0.65rem 1.1rem; margin-bottom: 1.25rem; }
+    .sdm-price-from { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green); font-weight: 700; opacity: 0.7; }
+    .sdm-price-amount { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--green); }
+    .sdm-price-unit { font-size: 0.8rem; color: #777; font-weight: 300; }
+    .sdm-desc { font-size: 0.93rem; color: #555; line-height: 1.8; font-weight: 300; margin-bottom: 1.25rem; flex: 1; }
+    .sdm-includes-label { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green); font-weight: 700; margin-bottom: 0.6rem; display: block; }
+    .sdm-includes-list { list-style: none; display: flex; flex-direction: column; gap: 0.38rem; margin-bottom: 1rem; }
+    .sdm-includes-list li { font-size: 0.87rem; color: #444; font-weight: 300; display: flex; align-items: center; gap: 0.55rem; }
+    .sdm-includes-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    .sdm-avail-note { font-size: 0.78rem; color: var(--berry); font-style: italic; padding-top: 0.75rem; border-top: 1px solid rgba(184,153,88,0.15); }
+    .sdm-img-col { display: flex; flex-direction: column; background: #111; overflow: hidden; }
+    .sdm-img-track-outer { overflow: hidden; flex: 1; position: relative; }
+    .sdm-img-track { display: flex; height: 100%; transition: transform 0.45s cubic-bezier(0.65,0,0.35,1); will-change: transform; }
+    .sdm-img-page { flex: 0 0 100%; min-width: 0; height: 100%; position: relative; overflow: hidden; }
+    .sdm-img-page img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sdm-img-page.no-img { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; background: #1a1a2e; }
+    .sdm-img-page.no-img svg { width: 52px; height: 52px; opacity: 0.3; color: var(--gold); }
+    .sdm-img-page.no-img span { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(184,153,88,0.4); font-weight: 700; }
+    .sdm-img-page::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%); pointer-events: none; }
+    .sdm-img-badge { position: absolute; bottom: 1.1rem; left: 1.1rem; z-index: 2; background: rgba(29,91,58,0.88); backdrop-filter: blur(4px); border: 1px solid rgba(184,153,88,0.35); padding: 0.3rem 0.8rem; font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+    .sdm-nav { display: flex; align-items: center; justify-content: center; gap: 1.5rem; padding: 1rem 2rem; border-top: 1px solid rgba(184,153,88,0.1); background: var(--white); flex-shrink: 0; }
+    .sdm-nav-btn { width: 42px; height: 42px; background: transparent; border: 1.5px solid rgba(184,153,88,0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s; color: var(--gold); }
+    .sdm-nav-btn:hover { background: var(--green); border-color: var(--green); color: white; }
+    .sdm-nav-btn svg { width: 18px; height: 18px; }
+    .sdm-dots { display: flex; gap: 0.5rem; }
+    .sdm-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(184,153,88,0.25); border: none; cursor: pointer; transition: background 0.25s, transform 0.25s; padding: 0; }
+    .sdm-dot.active { background: var(--gold); transform: scale(1.3); }
+    .sdm-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 2rem 1.4rem; border-top: 1px solid rgba(184,153,88,0.12); flex-shrink: 0; background: var(--white); }
+    .sdm-selection-pill { display: flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #888; font-weight: 700; flex: 1; min-width: 0; }
+    .sdm-selection-pill span.pill-svc { color: var(--green); }
+    .sdm-selection-pill span.pill-sep { color: rgba(184,153,88,0.5); }
+    .sdm-selection-pill span.pill-event { color: var(--purple); }
+    .sdm-selection-pill span.pill-price { color: var(--gold); }
+    .sdm-footer-btns { display: flex; gap: 0.75rem; flex-shrink: 0; }
+    .btn-sdm-back { background: transparent; color: #888; border: 1.5px solid rgba(0,0,0,0.13); padding: 0.8rem 1.3rem; font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .btn-sdm-back:hover { border-color: #555; color: #333; }
+    .btn-sdm-proceed { background: var(--green); color: white; border: none; padding: 0.8rem 1.8rem; font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: all 0.25s; box-shadow: 0 4px 18px rgba(29,91,58,0.25); display: flex; align-items: center; gap: 0.55rem; white-space: nowrap; }
+    .btn-sdm-proceed:hover { background: #164a2d; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(29,91,58,0.3); }
+    .btn-sdm-proceed svg { width: 14px; height: 14px; }
+
+    /* BOOKING MODAL */
+    .modal-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(20,20,20,0.72); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .book-modal { background: var(--white); width: 100%; max-width: 580px; max-height: 92vh; overflow-y: auto; position: relative; transform: translateY(28px) scale(0.98); transition: transform 0.35s cubic-bezier(0.34,1.3,0.64,1); }
+    .modal-overlay.active .book-modal { transform: translateY(0) scale(1); }
+    .book-modal-head { background: linear-gradient(135deg, var(--purple) 0%, #4e1a6b 100%); padding: 2rem 2.25rem 1.75rem; position: relative; }
+    .step-track { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.9rem; }
+    .step-pip { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.28); transition: width 0.3s, background 0.3s; width: 22px; }
+    .step-pip.done { background: var(--gold); }
+    .step-pip.active { background: white; width: 38px; }
+    .step-track-label { font-size: 0.65rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.6); font-weight: 700; margin-left: 0.2rem; }
+    .book-modal-head h2 { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 600; color: white; margin-bottom: 0.25rem; }
+    .book-modal-subtitle { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); font-weight: 700; }
+    .bm-summary-chip { display: flex; align-items: center; gap: 0.6rem; margin-top: 1rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem 1rem; flex-wrap: wrap; }
+    .bm-chip-item { display: flex; flex-direction: column; }
+    .bm-chip-label { font-size: 0.57rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 700; }
+    .bm-chip-value { font-size: 0.78rem; font-weight: 700; color: var(--gold); letter-spacing: 0.05em; }
+    .bm-chip-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.2); flex-shrink: 0; }
+    .modal-x { position: absolute; top: 1.1rem; right: 1.1rem; width: 34px; height: 34px; border: none; cursor: pointer; background: rgba(255,255,255,0.14); color: white; font-size: 1.15rem; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .modal-x:hover { background: rgba(255,255,255,0.28); }
+    .book-modal-body { padding: 1.75rem 2.25rem 2.25rem; }
+    .bf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.1rem; }
+    .bf-group { display: flex; flex-direction: column; }
+    .bf-group.span2 { grid-column: 1 / -1; }
+    .bf-group label { font-size: 0.67rem; letter-spacing: 0.22em; text-transform: uppercase; color: #888; font-weight: 700; margin-bottom: 0.4rem; display: block; }
+    .bf-group input, .bf-group select, .bf-group textarea { width: 100%; padding: 0.78rem 0.95rem; border: 1.5px solid rgba(0,0,0,0.1); background: var(--cream); font-family: 'Lato', sans-serif; font-size: 0.91rem; color: var(--dark); font-weight: 300; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    .bf-group input:focus, .bf-group select:focus, .bf-group textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(107,45,140,0.08); }
+    .bf-group textarea { resize: vertical; min-height: 96px; }
+    .bf-group input[readonly] { background: #f0f4f1; color: #555; cursor: default; border-color: rgba(29,91,58,0.2); }
+    .bf-actions { display: flex; gap: 0.85rem; margin-top: 1.75rem; align-items: center; }
+    .btn-back { background: transparent; color: #888; border: 1.5px solid rgba(0,0,0,0.13); padding: 0.85rem 1.4rem; font-family: 'Lato', sans-serif; font-size: 0.76rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-back:hover { border-color: var(--purple); color: var(--purple); }
+    .btn-book-submit { flex: 1; background: var(--purple); color: white; border: none; padding: 0.9rem 1.4rem; font-family: 'Lato', sans-serif; font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: background 0.25s, transform 0.2s, box-shadow 0.25s; box-shadow: 0 4px 18px rgba(107,45,140,0.3); }
+    .btn-book-submit:hover:not(:disabled) { background: #4e1a6b; transform: translateY(-2px); box-shadow: 0 8px 26px rgba(107,45,140,0.35); }
+    .book-success { display: none; text-align: center; padding: 3rem 2.25rem 2.5rem; }
+    .book-success.show { display: block; }
+    .success-icon-wrap { width: 70px; height: 70px; border-radius: 50%; background: var(--light-green); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.4rem; }
+    .success-icon-wrap svg { width: 30px; height: 30px; }
+    .book-success h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--green); margin-bottom: 0.6rem; }
+    .book-success p { font-size: 0.93rem; color: #666; line-height: 1.75; font-weight: 300; }
+    .success-svc-name { display: inline-block; margin-top: 0.85rem; padding: 0.35rem 1rem; background: var(--light-green); font-size: 0.78rem; color: var(--green); letter-spacing: 0.12em; font-weight: 700; text-transform: uppercase; }
+    .field-error { border-color: #c0392b !important; box-shadow: 0 0 0 3px rgba(192,57,43,0.1) !important; }
+    .field-error-msg { font-size: 0.72rem; color: #c0392b; margin-top: 0.3rem; display: block; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-image-wrap { max-width: 400px; margin: 0 auto; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .bf-grid { grid-template-columns: 1fr; }
+      .bf-group.span2 { grid-column: 1; }
+      .hero-ring-light-1 { width: 420px; height: 420px; }
+      .hero-ring-light-2 { width: 300px; height: 300px; }
+      .hero-ring-light-3 { width: 560px; height: 560px; }
+      .sdm-body { grid-template-columns: 1fr; }
+      .sdm-img-col { min-height: 220px; max-height: 220px; }
+      .sdm-info-col { border-right: none; border-top: 1px solid rgba(184,153,88,0.12); }
+      /* FIX: was .sdm-detail-modal (wrong class name, caused tablet layout bug) */
+      .svc-detail-modal { max-width: 560px; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 0.75rem 1.25rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .services-grid { grid-template-columns: 1fr; }
+      section { padding: 4rem 1.25rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-form-wrap { padding: 2rem 1.5rem; }
+      .book-modal-head, .book-modal-body { padding-left: 1.4rem; padding-right: 1.4rem; }
+      .bf-actions { flex-direction: column; }
+      .btn-book-submit, .btn-back { width: 100%; text-align: center; }
+      .testi-frame { padding: 1rem; }
+      .sdm-footer { flex-direction: column; align-items: stretch; }
+      .sdm-footer-btns { justify-content: stretch; }
+      .btn-sdm-back, .btn-sdm-proceed { flex: 1; text-align: center; justify-content: center; }
+      .sdm-header { padding: 1rem 1.25rem; }
+      .sdm-info-page { padding: 1.25rem; }
+      .sdm-nav { padding: 0.75rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#home" class="nav-logo">
+    <img src="assets/Icons-Logos/TribeCreatives1.png" style="border-radius:25px;" alt="Tribe Creatives logo">
+    <div class="nav-brand" id="navBrand">
+      <span class="tribe">TRIBE</span>
+      <span class="creatives">Creatives</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#portfolio" onclick="closeMobile()">Portfolio</a>
+  <a href="#testimonials" onclick="closeMobile()">Testimonials</a>
+  <a href="#about" onclick="closeMobile()">About Us</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-mesh-light"></div>
+  <div class="hero-ring-light hero-ring-light-3"></div>
+  <div class="hero-ring-light hero-ring-light-1"></div>
+  <div class="hero-ring-light hero-ring-light-2"></div>
+  <div class="hero-content">
+    <div class="hero-wordmark">
+      <span class="hero-wordmark-tribe">Tri</span><span class="hero-wordmark-be">Be</span>
+    </div>
+    <div class="hero-wordmark-creatives">Creatives</div>
+    <div class="hero-location">
+      <div class="hero-location-line"></div>
+      <span>Ontario, Canada</span>
+      <div class="hero-location-line"></div>
+    </div>
+    <p class="hero-tagline-light">You dream it, we bring it to life.</p>
+    <p class="hero-desc-light">At Tribe Creatives, we specialize in crafting stress-free, elegant experiences for your most cherished moments — birthdays, debuts, quinceañeras, and beyond. Let us handle the planning so you can focus on making memories.</p>
+    <div class="hero-cta">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#contact" class="btn-outline">Book a Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     SERVICES SECTION
+     HOW TO EDIT CARD TEXT:
+       Card title (h3)   → edit the <h3> in each card below
+       Card description  → edit the <p> in each card below
+       Card tag line     → edit the <span class="service-tag">
+       Price badge       → AUTO from SERVICE_DATA in JS (no HTML edit needed)
+       All modal content → ALL in SERVICE_DATA in JS — single source of truth
+     ========================================================== -->
+<section id="services">
+  <div class="section-inner">
+    <div class="services-header reveal">
+      <p class="section-label">What We Offer</p>
+      <h2 class="section-title">Our <em>Services</em></h2>
+      <div class="section-divider" style="justify-content:center;"><div class="section-divider-dot"></div></div>
+      <p style="max-width:560px;margin:0 auto;color:#666;font-size:0.97rem;line-height:1.75;font-weight:300;">From the first concept to the final farewell, we handle every detail so your event unfolds flawlessly.</p>
+    </div>
+    <div class="services-grid">
+
+      <!-- data-service-key links each card to SERVICE_DATA in JS.
+           The price badge is LEFT EMPTY — JS fills it automatically from SERVICE_DATA. -->
+
+      <div class="service-card reveal" data-service-key="hosting">
+        <div class="svc-bg svc-bg-planning" style="background-image: url('assets/Display-Services/fullevent-planning.jpg'); background-size: cover; background-position: center;"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-price-badge"></div><!-- auto-filled by JS -->
+        <div class="svc-content">
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <h3>Hosting</h3><!-- edit card title here -->
+          <p>A great celebration starts with a great host. Our professional emcees keep your guests engaged and every moment flowing seamlessly.</p>
+          <span class="service-tag">Emcee · Audience Engagement · Event Flow</span>
+          <button class="btn-view-details" onclick="openDetailModal('hosting')">View Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+
+      <div class="service-card reveal" data-service-key="decorations">
+        <div class="svc-bg svc-bg-design" style="background-image: url('assets/Display-Services/vendorcoordination.jpg'); background-size: cover; background-position: center;"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-price-badge"></div>
+        <div class="svc-content">
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Decorations/Backdrop</h3>
+          <p>Elegant, personalized décor that reflects your dream.<span> Always choose "Custom" to contact us. We are happy to be part of your dream.</span></p>
+          <span class="service-tag">Floral Styling · Venue Décor · Themed Setup · Archs</span>
+          <button class="btn-view-details" onclick="openDetailModal('decorations')">View Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+
+      <div class="service-card reveal" data-service-key="photobooth">
+        <div class="svc-bg svc-bg-vendor" style="background-image: url('assets/Display-Services/photobooth.png'); background-size: cover; background-position: center;"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-price-badge"></div>
+        <div class="svc-content">
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Photo/Studio Booth</h3>
+          <p>Give your guests a fun, interactive way to capture memories they'll cherish long after the celebration ends.</p>
+          <span class="service-tag">Instant Prints · Fun Props · Digital Memories</span>
+          <button class="btn-view-details" onclick="openDetailModal('photobooth')">View Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+
+      <div class="service-card reveal" data-service-key="refreshments">
+        <div class="svc-bg svc-bg-debut" style="background-image: url('assets/Display-Services/day-off\ coordination.jpg'); background-size: cover; background-position: center;"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-price-badge"></div>
+        <div class="svc-content">
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <h3>Refreshments</h3>
+          <p>Great moments are shared over great food. We provide refreshments that keep your guests satisfied and complement your celebration.</p>
+          <span class="service-tag">Food &amp; Beverages · Guest Catering · Refreshment Station</span>
+          <button class="btn-view-details" onclick="openDetailModal('refreshments')">View Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+
+      <div class="service-card reveal" data-service-key="program">
+        <div class="svc-bg svc-bg-dayof" style="background-image: url('assets/Display-Services/designandstyling.jpg'); background-size: cover; background-position: center;"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-price-badge"></div>
+        <div class="svc-content">
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3>Program Management</h3>
+          <p>We organize every segment of your program to ensure a smooth, engaging, and stress-free experience from start to finish.</p>
+          <span class="service-tag">Program Flow · Stage Management · Timeline Execution</span>
+          <button class="btn-view-details" onclick="openDetailModal('program')">View Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+
+      <div class="service-card reveal" data-service-key="coordination">
+        <div class="svc-bg svc-bg-custom" style="background-image: url('assets/Display-Services/custom-celebration.jpg'); background-size: cover; background-position: center;"></div>
+        <div class="svc-overlay"></div>
+        <div class="svc-price-badge"></div>
+        <div class="svc-content">
+          <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <h3>Event Coordination</h3>
+          <p>Full-day coordination ensuring every timeline is followed, every vendor managed, and every detail unfolds flawlessly.</p>
+          <span class="service-tag">Timeline · Vendor Coordination · On-Site Management</span>
+          <button class="btn-view-details" onclick="openDetailModal('coordination')">View Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     PORTFOLIO SECTION
+     Slides are built automatically from PORTFOLIO_DATA in JS.
+     Do NOT add slides here manually in the HTML.
+     Edit PORTFOLIO_DATA in the <script> below — that is your
+     only edit point for adding, removing, or renaming slides.
+     ========================================================== -->
+<section id="portfolio">
+  <div class="section-inner">
+    <div class="showcase-header reveal">
+      <p class="section-label" style="color:rgba(184,153,88,0.8);">Our Work</p>
+      <h2 class="section-title">Event <em style="color:white;font-style:italic;">Portfolio</em></h2>
+      <div class="section-divider" style="justify-content:center;"><div class="section-divider-dot" style="background:var(--gold);"></div></div>
+      <p style="max-width:520px;margin:0 auto;color:rgba(255,255,255,0.6);font-size:0.95rem;line-height:1.75;font-weight:300;">A glimpse into the beautiful moments we've helped create for our incredible clients across Ontario.</p>
+    </div>
+    <div class="portfolio-carousel-wrap reveal">
+      <div class="portfolio-frame">
+        <div class="portfolio-track-outer">
+          <!-- Slides injected here by renderPortfolio() in JS — do not add manually -->
+          <div class="portfolio-track" id="portfolioTrack"></div>
+        </div>
+      </div>
+      <div class="portfolio-controls">
+        <button class="portfolio-btn" id="portfolioPrevBtn" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="portfolio-dots" id="portfolioDots"></div>
+        <button class="portfolio-btn" id="portfolioNextBtn" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+    </div>
+    <p class="showcase-coming">Portfolio photos coming soon — follow us on Facebook for sneak peeks.</p>
+    <button class="btn-see-more" onclick="window.open('https://www.facebook.com/tribecreativescanada','_blank','noopener,noreferrer')">See More</button>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="testimonials-header reveal">
+      <p class="section-label">Kind Words</p>
+      <h2 class="section-title">Client <em>Testimonials</em></h2>
+      <div class="section-divider" style="justify-content:center;"><div class="section-divider-dot"></div></div>
+    </div>
+    <div class="testi-carousel-wrap reveal">
+      <div class="testi-frame">
+        <div class="testi-track-outer">
+          <div class="testi-track" id="testiTrack">
+            <div class="testi-slide"><img src="assets/Testimonials/Testimonial(1).png" alt="Client testimonial 1"></div>
+            <div class="testi-slide"><img src="assets/Testimonials/Testimonial(2).png" alt="Client testimonial 2"></div>
+            <div class="testi-slide"><img src="assets/Testimonials/Testimonial(3).png" alt="Client testimonial 3"></div>
+            <div class="testi-slide"><img src="assets/Testimonials/Testimonial(4).png" alt="Client testimonial 4"></div>
+            <div class="testi-slide"><img src="assets/Testimonials/Testimonial(5).png" alt="Client testimonial 5"></div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-controls">
+        <button class="testi-btn" id="testiPrevBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="testi-dots" id="testiDots"></div>
+        <button class="testi-btn" id="testiNextBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+      <p class="testi-source">As shared on Facebook</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-image-wrap reveal">
+        <div class="about-img-placeholder"><img src="assets/Icons-Logos/TribeCreatives1.png" style="border-radius:25px;" alt="Tribe Creatives logo"></div>
+        <div class="about-accent-box"><span class="num">100%</span><span class="label">Stress-Free Events</span></div>
+      </div>
+      <div class="about-text reveal">
+        <p class="section-label">Our Story</p>
+        <h2 class="section-title">We are <em>TriBe Creatives</em></h2>
+        <div class="section-divider"><div class="section-divider-dot"></div></div>
+        <p>We are a passionate events management team based in Ontario, Canada, dedicated to turning your most precious milestones into unforgettable experiences.</p>
+        <p>Our team believes every celebration deserves elegance without the stress. We handle every detail — from concept to execution — so you can be fully present for the moments that matter most.</p>
+        <div class="about-pillars">
+          <div class="pillar"><div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1D5B3A" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="pillar-text"><strong>Trusted Planning</strong><span>Every detail handled with professionalism and care.</span></div></div>
+          <div class="pillar"><div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1D5B3A" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="pillar-text"><strong>Custom Concepts</strong><span>Tailored themes and designs unique to your vision.</span></div></div>
+          <div class="pillar"><div class="pillar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1D5B3A" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div><div class="pillar-text"><strong>Joyful Experiences</strong><span>Creating memories you and your guests will cherish forever.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p class="section-label">Get In Touch</p>
+        <h2>Let's plan something <em>beautiful</em> together.</h2>
+        <p>Ready to begin? Reach out to us and let's talk about your vision. We'd love to be part of your most cherished milestone.</p>
+        <div class="contact-details">
+          <div class="contact-row"><div class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1D5B3A" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="contact-row-text"><strong>Location</strong><span>Ontario, Canada</span></div></div>
+          <div class="contact-row"><div class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1D5B3A" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.45 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6 6l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg></div><div class="contact-row-text"><strong>Phone</strong><a href="tel:12898879791">1 289-887-9791</a></div></div>
+          <div class="contact-row"><div class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1D5B3A" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="contact-row-text"><strong>Email</strong><a href="mailto:bn_main@outlook.com">bn_main@outlook.com</a></div></div>
+          <div class="contact-row"><div class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1D5B3A" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div><div class="contact-row-text"><strong>Facebook</strong><a href="https://www.facebook.com/tribecreativescanada" target="_blank" rel="noopener noreferrer">@tribecreativescanada</a></div></div>
+          <div class="contact-row"><div class="contact-row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1D5B3A" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line><path d="M16 11.37a4 4 0 1 1-7.75 1.24 4 4 0 0 1 7.75-1.24z"></path></svg></div><div class="contact-row-text"><strong>Instagram</strong><a href="https://www.instagram.com/events.tribecreatives" target="_blank" rel="noopener noreferrer">@events.tribecreatives</a></div></div>
+        </div>
+      </div>
+      <div class="contact-form-wrap reveal">
+        <h3>Want to have a Consultation?</h3>
+        <div class="form-row">
+          <div class="form-group"><label for="fname">First Name</label><input type="text" id="fname" placeholder="Maria" maxlength="50" autocomplete="given-name"/></div>
+          <div class="form-group"><label for="lname">Last Name</label><input type="text" id="lname" placeholder="Santos" maxlength="50" autocomplete="family-name"/></div>
+        </div>
+        <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" placeholder="maria@email.com" maxlength="100" autocomplete="email"/></div>
+        <div class="form-group"><label for="phone">Contact Number</label><input type="tel" id="phone" placeholder="+1 (289) 000-0000" maxlength="20" autocomplete="tel"/></div>
+        <div class="form-group">
+          <label for="event-type">Event Type</label>
+          <select id="event-type"><option value="" disabled selected>Select an event type</option><option>Birthday Celebration</option><option>Debut (18th Birthday)</option><option>Quinceañera</option><option>Bridal Shower</option><option>Anniversary</option><option>Other</option></select>
+        </div>
+        <div class="form-group"><label for="event-location">Event Location</label><input type="text" id="event-location" placeholder="e.g. Hamilton Convention Centre, Ontario" maxlength="100"/></div>
+        <div class="form-group"><label for="message">Tell Us About Your Event</label><textarea id="message" placeholder="Share your vision, preferred date, guest count, preferred email to be contacted, contact number, and any other details about the event..." maxlength="1000"></textarea></div>
+        <button class="btn-primary" id="contactSubmitBtn" style="width:100%;" onclick="submitContactForm()">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <div class="footer-logo-img-wrap"><img src="assets/Icons-Logos/TribeCreatives1.png" style="border-radius:25px;" alt="Tribe Creatives logo"></div>
+      <div class="footer-brand"><span class="tribe">TRIBE CREATIVES</span><span class="creatives">Events &amp; Management</span></div>
+    </div>
+    <p class="footer-motto">Elevating Every Cherished Milestone</p>
+    <div class="footer-divider"></div>
+    <p class="footer-bottom">&copy; 2020 Tribe Creatives — Ontario, Canada &nbsp;&middot;&nbsp;<a href="mailto:bn_main@outlook.com">bn_main@outlook.com</a> &nbsp;&middot;&nbsp;<a href="https://www.facebook.com/tribecreativescanada" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+  </div>
+</footer>
+
+<!-- SERVICE DETAIL MODAL -->
+<div class="svc-detail-overlay" id="svcDetailOverlay" role="dialog" aria-modal="true" aria-labelledby="sdmServiceName">
+  <div class="svc-detail-modal" id="svcDetailModal">
+    <div class="sdm-header">
+      <div class="sdm-header-left">
+        <div><span class="sdm-service-eyebrow">Service</span><span class="sdm-service-name" id="sdmServiceName">—</span></div>
+        <div class="sdm-page-counter" id="sdmPageCounter">1 / 1</div>
+      </div>
+      <button class="sdm-close" id="sdmCloseBtn" aria-label="Close">&times;</button>
+    </div>
+    <div class="sdm-body">
+      <div class="sdm-info-col"><div class="sdm-info-track-outer"><div class="sdm-info-track" id="sdmInfoTrack"></div></div></div>
+      <div class="sdm-img-col"><div class="sdm-img-track-outer"><div class="sdm-img-track" id="sdmImgTrack"></div></div></div>
+    </div>
+    <div class="sdm-nav">
+      <button class="sdm-nav-btn" id="sdmPrevBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="sdm-dots" id="sdmDots"></div>
+      <button class="sdm-nav-btn" id="sdmNextBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+    <div class="sdm-footer">
+      <div class="sdm-selection-pill" id="sdmSelectionPill"><span>Select an event above to continue</span></div>
+      <div class="sdm-footer-btns">
+        <button class="btn-sdm-back" id="sdmBackBtn">&#8592; Go Back</button>
+        <button class="btn-sdm-proceed" id="sdmProceedBtn">Fill in Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING FORM MODAL -->
+<div class="modal-overlay" id="bookOverlay" role="dialog" aria-modal="true">
+  <div class="book-modal">
+    <div class="book-modal-head">
+      <div class="step-track"><div class="step-pip done"></div><div class="step-pip active"></div><span class="step-track-label">Step 2 of 2 — Your Details</span></div>
+      <h2>Booking Form</h2>
+      <p class="book-modal-subtitle">Complete your request</p>
+      <div class="bm-summary-chip" id="bmSummaryChip">
+        <div class="bm-chip-item"><span class="bm-chip-label">Service</span><span class="bm-chip-value" id="bmChipService">—</span></div>
+        <div class="bm-chip-divider"></div>
+        <div class="bm-chip-item"><span class="bm-chip-label">Event Type</span><span class="bm-chip-value" id="bmChipEvent">—</span></div>
+        <div class="bm-chip-divider"></div>
+        <div class="bm-chip-item"><span class="bm-chip-label">Price</span><span class="bm-chip-value" id="bmChipPrice">—</span></div>
+      </div>
+      <button class="modal-x" id="bookCloseBtn" aria-label="Close">&times;</button>
+    </div>
+    <div class="book-modal-body" id="bookFormWrap">
+      <div class="bf-grid">
+        <input type="hidden" id="bf-service-name">
+        <input type="hidden" id="bf-event-name">
+        <input type="hidden" id="bf-price">
+        <div class="bf-group"><label for="bf-fname">First Name</label><input type="text" id="bf-fname" placeholder="Maria" maxlength="50" autocomplete="given-name"/></div>
+        <div class="bf-group"><label for="bf-lname">Last Name</label><input type="text" id="bf-lname" placeholder="Santos" maxlength="50" autocomplete="family-name"/></div>
+        <div class="bf-group span2"><label for="bf-email">Email Address</label><input type="email" id="bf-email" placeholder="maria@email.com" maxlength="100" autocomplete="email"/></div>
+        <div class="bf-group span2"><label for="bf-phone">Contact Number</label><input type="tel" id="bf-phone" placeholder="+1 (289) 000-0000" maxlength="20" autocomplete="tel"/></div>
+        <div class="bf-group"><label for="bf-selected-service">Selected Service</label><input type="text" id="bf-selected-service" readonly/></div>
+        <div class="bf-group"><label for="bf-selected-event">Event Type</label><input type="text" id="bf-selected-event" readonly/></div>
+        <div class="bf-group"><label for="bf-selected-price">Price</label><input type="text" id="bf-selected-price" readonly/></div>
+        <div class="bf-group"><label for="bf-guest-count">Est. Guest Count <small>(Optional)</small></label><input type="number" id="bf-guest-count" placeholder="e.g. 150" min="1" max="9999"/></div>
+        <div class="bf-group span2"><label for="bf-location">Event Location</label><input type="text" id="bf-location" placeholder="e.g. Hamilton Convention Centre, Ontario" maxlength="100"/></div>
+        <div class="bf-group span2"><label for="bf-date">Preferred Event Date</label><input type="date" id="bf-date"/></div>
+        <div class="bf-group span2"><label for="bf-notes">Tell Us About Your Event</label><textarea id="bf-notes" placeholder="Share your vision, preferred date, guest count, preferred email to be contacted, contact number, and any other details about the event..." maxlength="1000"></textarea></div>
+      </div>
+      <div class="bf-actions">
+        <button class="btn-back" id="bookBackBtn">&#8592; Back</button>
+        <button class="btn-book-submit" id="bookSubmitBtn" onclick="submitBooking()">Book Consultation</button>
+      </div>
+    </div>
+    <div class="book-success" id="bookSuccess">
+      <div class="success-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#1D5B3A" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <h3>Booking Request Sent!</h3>
+      <p>Thank you! We've received your request for:</p>
+      <div class="success-svc-name" id="successSvcName"></div>
+      <p style="margin-top:1rem;">Our team will reach out within <strong>24 hours</strong> to confirm your appointment.</p>
+      <button class="btn-primary" onclick="closeBookModal()">Back to Site</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* SECURITY HELPERS */
+function sanitizeText(str) { const d = document.createElement('div'); d.textContent = str; return d.textContent; }
+function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email); }
+function isValidPhone(phone) { return /^[0-9+\-() ]{7,20}$/.test(phone); }
+function setFieldError(el, msg) {
+  el.classList.add('field-error');
+  let m = el.parentElement.querySelector('.field-error-msg');
+  if (!m) { m = document.createElement('span'); m.className = 'field-error-msg'; el.parentElement.appendChild(m); }
+  m.textContent = msg;
+}
+function clearAllErrors(container) {
+  container.querySelectorAll('.field-error').forEach(e => e.classList.remove('field-error'));
+  container.querySelectorAll('.field-error-msg').forEach(e => e.remove());
+}
+
+/* ================================================================
+   PORTFOLIO DATA — YOUR ONLY EDIT POINT FOR PORTFOLIO SLIDES
+   ================================================================
+   HOW TO ADD A NEW SLIDE (3 steps):
+     1. Copy one { } block below
+     2. Paste it after the last entry, before the closing ]
+     3. Update src, eventType, title, and bg
+     Save. The carousel builds automatically — no other changes needed.
+
+   HOW TO REMOVE: delete the { } block.
+   HOW TO REORDER: cut and paste blocks into any order.
+
+   IMAGE SIZING: all slides use a 4:3 frame with object-fit:cover.
+   Your photo always fills the frame at the same size regardless of
+   its original dimensions. No stretching, no gaps.
+   ================================================================ */
+const PORTFOLIO_DATA = [
+
+  {
+    src:       'assets/Services/s-photobooth-1.jpg', // path to your image
+    eventType: 'Family Portrait',    // gold label shown top-left of slide
+    title:     'Studio Booth / Photobooth', // white title shown below label
+    bg:        '#1d1520'             // background colour while image loads
+  },
+
+  {
+    src:       'assets/Services/s-backdrop-3.jpg', // path to your image
+    eventType: 'Birthday',    // gold label shown top-left of slide
+    title:     'Backdrop / Photo Booth', // white title shown below label
+    bg:        '#1d1520'             // background colour while image loads
+  },
+  {
+    src:       'assets/Services/s-refreshment-1.jpg', // path to your image
+    eventType: 'Refreshment Birthday Cake / Dessert',    // gold label shown top-left of slide
+    title:     'Cake / Dessert', // white title shown below label
+    bg:        '#1d1520'             // background colour while image loads
+  },
+  {
+    src:       'assets/Services/s-backdrop-closeup-2.jpg', // path to your image
+    eventType: 'Wedding',    // gold label shown top-left of slide
+    title:     'Full Event Setup / Stage Stup', // white title shown below label
+    bg:        '#1d1520'             // background colour while image loads
+  },
+  {
+    src:       'assets/Services/s-stage-setup-2.jpg', // path to your image
+    eventType: 'Birthday',    // gold label shown top-left of slide
+    title:     'Stage Setup', // white title shown below label
+    bg:        '#1d1520'             // background colour while image loads
+  },
+  {
+    src:       'assets/Services/s-backdrop-6.jpg', // path to your image
+    eventType: 'Birthday',    // gold label shown top-left of slide
+    title:     'Backdrop Decorations', // white title shown below label
+    bg:        '#1d1520'             // background colour while image loads
+  },
+  // PASTE NEW SLIDES BELOW THIS LINE --------------------------------
+  // {
+  //   src:       'assets/Portfolio/your-photo.jpg',
+  //   eventType: 'Birthday',
+  //   title:     'Garden Elegance',
+  //   bg:        '#1a2e20'
+  // },
+  // {
+  //   src:       'assets/Portfolio/another-photo.jpg',
+  //   eventType: 'Debut',
+  //   title:     'Golden Night',
+  //   bg:        '#1e1525'
+  // },
+  // -----------------------------------------------------------------
+
+];
+
+/* Builds all slides from PORTFOLIO_DATA and wires up the carousel.
+   Called once on page load — do not call manually. */
+function renderPortfolio() {
+  const track    = document.getElementById('portfolioTrack');
+  const dotsWrap = document.getElementById('portfolioDots');
+  track.innerHTML = '';
+  dotsWrap.innerHTML = '';
+
+  if (!PORTFOLIO_DATA.length) {
+    track.innerHTML = '<div class="portfolio-slide is-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Portfolio Photos Coming Soon</span></div>';
+    return;
+  }
+
+  let current = 0;
+
+  PORTFOLIO_DATA.forEach(function(item, i) {
+    var slide = document.createElement('div');
+    slide.className = 'portfolio-slide';
+    if (item.bg) slide.style.background = item.bg;
+
+    var img = document.createElement('img');
+    img.src = item.src;
+    img.alt = (item.eventType || '') + ' — ' + (item.title || '');
+    slide.appendChild(img);
+
+    // Caption always rendered — position:relative on .portfolio-slide
+    // is the CSS fix that makes it anchor correctly.
+    var cap = document.createElement('div');
+    cap.className = 'portfolio-caption';
+    cap.innerHTML = '<span>' + sanitizeText(item.eventType || '') + '</span><p>' + sanitizeText(item.title || '') + '</p>';
+    slide.appendChild(cap);
+
+    track.appendChild(slide);
+
+    var dot = document.createElement('button');
+    dot.className = 'portfolio-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dot.addEventListener('click', function() { goTo(i); });
+    dotsWrap.appendChild(dot);
+  });
+
+  var slides = track.querySelectorAll('.portfolio-slide');
+
+  function goTo(idx) {
+    current = (idx + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dotsWrap.querySelectorAll('button').forEach(function(d, i) { d.classList.toggle('active', i === current); });
+  }
+
+  document.getElementById('portfolioPrevBtn').addEventListener('click', function() { goTo(current - 1); });
+  document.getElementById('portfolioNextBtn').addEventListener('click', function() { goTo(current + 1); });
+}
+
+/* ================================================================
+   SERVICE DATA — SINGLE SOURCE OF TRUTH FOR ALL SERVICE CONTENT
+   ================================================================
+   WHAT THIS CONTROLS (auto-updates everywhere on change):
+     Service name   → modal header, card h3, booking form chip
+     Event type     → modal page label, image badge, footer pill
+     Title          → modal page title, booking form chip
+     Price          → card price badge, modal price block, booking form
+     Desc/includes  → modal info panel only
+
+   HOW TO RENAME:
+     Change  name: 'Hosting'  to  name: 'Professional Hosting'
+     Done. Card badge, modal header, booking form — all update.
+
+   HOW TO RENAME AN EVENT / CHANGE A TITLE:
+     Find the page inside pages:[] and change eventType or title.
+     Example:  title: '360 Slow-Mo Video Booth'  -> any new name
+     Updates: modal title, image badge, pill, and booking chip.
+
+   HOW TO CHANGE A PRICE:
+     Change  price: '$300'  inside the page object.
+     Card badge shows first page price automatically.
+   ================================================================ */
+const SERVICE_DATA = {
+
+  /* HOSTING — change name here to rename the service everywhere */
+ hosting: {
+    name: 'Event Hosting',
+    pages: [
+      { eventType: 'Premium', title: 'Premium Hosting', price: '$500', priceLabel: 'Starting at', desc: 'Full-service hosting featuring audience engagement, interactive games, and professional program direction.', 
+      includes: ['Professional Event Emcee','Basic Script Writing','Key Announcements','Microphone Handling','Full Script & Speech Writing','Interactive Games & Engagement','Comprehensive Program Management','VIP Guest Handling'], image: 'assets/Services/s-fullevent-setup-1.jpg' },
+
+      { eventType: 'Custom', title: 'Custom Hosting Package', price: 'Custom Quote', priceLabel: 'Pricing', desc: 'Tailored hosting for unique events, brand launches, or specific events or ceremonies. Define your dream, and allow us to handle the details.', 
+      includes: ['Tailored Event Script','Dedicated Event Emcee','Special Segment Hosting','Panel & Program Management','Custom Flow Design'], image: 'assets/Services/s-fullevent-setup-4.jpg' }
+    ]
+  },
+
+  /* DECORATIONS — change name here to rename everywhere */
+  decorations: {
+    name: 'Decorations / Backdrop',
+    pages: [
+      { eventType: 'Basic', title: 'Basic Décor Package', price: '$250', priceLabel: 'Starting at', desc: 'Simple, elegant backdrop setup with essential table styling and accent lighting.', 
+      includes: ['Single Backdrop Setup', 'Personalized Design'], image: 'assets/Services/s-backdrop-5.jpg' },
+
+      { eventType: 'Standard', title: 'Standard Décor Package', price: '$400', priceLabel: 'Starting at', desc: 'Themed decor, balloon or floral installations, and a cohesive design that brings a specific vision to life.', 
+      includes: ['Themed Backdrop Design','Balloon or Floral Installations', 'Personalized Design'], image: 'assets/Services/s-backdrop-2.jpg' },
+
+      { eventType: 'Premium', title: 'Premium Décor Package', price: '$600', priceLabel: 'Starting at', desc: 'Full-room transformation including 3D backdrops, premium linens, custom structural pieces', 
+      includes: ['Full Room Transformation','Custom 3D Backdrop Setup','Premium Linens & Draping','Floral Centerpiece Clusters'], image: 'assets/Services/s-backdrop-3.jpg' },
+
+      { eventType: 'Custom', title: 'Custom Decoration Package', price: 'Custom Quote', priceLabel: 'Pricing', desc: 'Environment creation, including unique structural installations, specialty prop sourcing, and personalized theme development. Define your dream, and allow us to handle the details.', 
+      includes: ['Backdrop Design','Unique Structural Installations','Specialty Prop Sourcing','Personalized Theme Development','Professional Installation Team'], image: 'assets/Services/s-backdrop-4.jpg' }
+    ]
+  },
+
+  /* PHOTO BOOTH — change name here to rename everywhere */
+  photobooth: {
+    name: 'Photo / Studio Booth',
+    pages: [
+      { eventType: 'Basic', title: 'Basic Booth', price: '$300', priceLabel: 'Starting at', desc: 'Digital-only photo capture, social media sharing station, and a digital gallery.', 
+      includes: ['Standard Backdrop','Personalized Photo Booth Design'], image: 'assets/Services/s-photobooth-1.jpg' },
+
+      { eventType: 'Standard', title: 'Standard Booth', price: '$450', priceLabel: 'Starting at', desc: 'Unlimited high-quality physical prints, themed props, and a professional on-site attendant.', 
+      includes: ['Themed Prop Collection','Digital Sharing Station','Professional On-Site Attendant','Personalized Photo Booth Design'], image: 'assets/Services/s-backdrop-6.jpg' },
+
+      { eventType: 'Premium', title: 'Premium Booth', price: '$650', priceLabel: 'Starting at', desc: 'Studio-grade lighting, high-resolution DSLR quality, custom branding/overlays, and live retouching.', 
+      includes: ['Studio-Grade Lighting','Professional DSLR Quality','High-Res Print Station','Custom Photo Border/Branding','Personalized Photo Booth Design'], image: 'assets/Services/s-fullevent-setup-closeup-4.jpg' },
+
+      { eventType: 'Custom', title: 'Custom Booth Package', price: 'Custom Quote', priceLabel: 'Pricing', desc: 'fully branded interfaces, or custom green-screen effects. Define your dream, and allow us to handle the details.', 
+      includes: ['Video/Photo Overlays','Fully Branded Interface','Custom Backdrop/Props','On-Site Technical Support'], image: 'assets/Services/s-stage-setup-4.jpg' }
+    ]
+  },
+
+  /* REFRESHMENTS — change name here to rename everywhere */
+  refreshments: {
+    name: 'Refreshments',
+    pages: [
+      { eventType: 'Custom', title: 'Custom Refreshment Package', price: 'Custom Quote', priceLabel: 'Pricing', desc: 'A fully personalized menu, including specialty cuisines, specific dietary accommodations, and chef-led service. Define your dream, and allow us to handle the details.', 
+      includes: ['Menu Planning','Customized Beverage Service'], image: 'assets/Services/s-refreshment-1.jpg' }
+    ]
+  },
+
+  /* PROGRAM MANAGEMENT — change name here to rename everywhere */
+  program: {
+    name: 'Program Management',
+    pages: [
+      { eventType: 'Custom', title: 'Custom Program Management', price: 'Custom Quote', priceLabel: 'Pricing', desc: 'Specialized management for multi-day events, gala productions, or unique performances requiring production support. Define your dream, and allow us to handle the details.', 
+      includes: ['Program Design','Multi-Stage Management','Staff Support'], image: 'assets/Services/s-fullevent-setup-4.jpg' }
+    ]
+  },
+
+  /* EVENT COORDINATION — change name here to rename everywhere */
+  coordination: {
+    name: 'Custom Event',
+    pages: [
+      { eventType: 'Custom', title: 'Custom Event Package', price: 'Custom Quote', priceLabel: 'Pricing', desc: 'A completely personalized event solution built from scratch to meet specific, non-standard event requirements. Define your dream, and allow us to handle the details.', 
+      includes: ['Personalized Event','Personalized Designs','Flexible Budget Planning'], image: 'assets/Services/s-fullevent-setup-4.jpg' }
+    ]
+  }
+
+}; // end SERVICE_DATA
+
+/* Reads SERVICE_DATA and updates each service card's price badge and
+   h3 title so they always match the data above. Runs once on load. */
+function initServiceCards() {
+  document.querySelectorAll('.service-card[data-service-key]').forEach(function(card) {
+    var key = card.getAttribute('data-service-key');
+    var svc = SERVICE_DATA[key];
+    if (!svc || !svc.pages.length) return;
+    var badge = card.querySelector('.svc-price-badge');
+    if (badge) {
+      var fp = svc.pages[0].price;
+      badge.textContent = (fp === 'Custom Quote') ? 'Custom Quote' : 'From ' + fp;
+    }
+    var h3 = card.querySelector('.svc-content h3');
+    if (h3) h3.textContent = svc.name;
+  });
+}
+
+/* SERVICE DETAIL MODAL */
+var sdm = { serviceKey: null, pages: [], current: 0 };
+
+function openDetailModal(serviceKey) {
+  var data = SERVICE_DATA[serviceKey];
+  if (!data) return;
+  sdm.serviceKey = serviceKey;
+  sdm.pages = data.pages;
+  sdm.current = 0;
+  document.getElementById('sdmServiceName').textContent = sanitizeText(data.name);
+
+  var infoTrack = document.getElementById('sdmInfoTrack');
+  infoTrack.innerHTML = '';
+  data.pages.forEach(function(p) {
+    var page = document.createElement('div');
+    page.className = 'sdm-info-page';
+    var isCustom = p.price === 'Custom Quote';
+    var priceHTML = isCustom
+      ? '<span class="sdm-price-from">' + sanitizeText(p.priceLabel) + '</span><span class="sdm-price-amount" style="font-size:1.35rem">Custom</span>'
+      : '<span class="sdm-price-from">' + sanitizeText(p.priceLabel) + '</span><span class="sdm-price-amount">' + sanitizeText(p.price) + '</span><span class="sdm-price-unit">/ event</span>';
+    var items = p.includes.map(function(i) { var li = document.createElement('li'); li.textContent = sanitizeText(i); return li.outerHTML; }).join('');
+    page.innerHTML = '<span class="sdm-event-type-label">' + sanitizeText(p.eventType) + '</span><h3 class="sdm-event-title">' + sanitizeText(p.title) + '</h3><div class="sdm-price-block">' + priceHTML + '</div><p class="sdm-desc">' + sanitizeText(p.desc) + '</p><span class="sdm-includes-label">What\'s Included</span><ul class="sdm-includes-list">' + items + '</ul><p class="sdm-avail-note">Availability varies by date. Our team will confirm within 24 hours.</p>';
+    infoTrack.appendChild(page);
+  });
+
+  var imgTrack = document.getElementById('sdmImgTrack');
+  imgTrack.innerHTML = '';
+  data.pages.forEach(function(p) {
+    var page = document.createElement('div');
+    if (p.image) {
+      page.className = 'sdm-img-page';
+      var img = document.createElement('img'); img.src = p.image; img.alt = sanitizeText(p.eventType); page.appendChild(img);
+      var badge = document.createElement('div'); badge.className = 'sdm-img-badge'; badge.textContent = sanitizeText(p.eventType); page.appendChild(badge);
+    } else {
+      page.className = 'sdm-img-page no-img';
+      page.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Photos coming soon</span>';
+    }
+    imgTrack.appendChild(page);
+  });
+
+  var dotsWrap = document.getElementById('sdmDots');
+  dotsWrap.innerHTML = '';
+  data.pages.forEach(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'sdm-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to page ' + (i + 1));
+    d.addEventListener('click', function() { sdmGoTo(i); });
+    dotsWrap.appendChild(d);
+  });
+
+  sdmGoTo(0);
+  document.getElementById('svcDetailOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function sdmGoTo(idx) {
+  var total = sdm.pages.length;
+  sdm.current = (idx + total) % total;
+  var p = sdm.pages[sdm.current];
+  document.getElementById('sdmInfoTrack').style.transform = 'translateX(-' + (sdm.current * 100) + '%)';
+  document.getElementById('sdmImgTrack').style.transform  = 'translateX(-' + (sdm.current * 100) + '%)';
+  document.querySelectorAll('.sdm-dot').forEach(function(d, i) { d.classList.toggle('active', i === sdm.current); });
+  document.getElementById('sdmPageCounter').textContent = (sdm.current + 1) + ' / ' + total;
+  var svcName = SERVICE_DATA[sdm.serviceKey].name;
+  document.getElementById('sdmSelectionPill').innerHTML = '<span class="pill-svc">' + sanitizeText(svcName) + '</span><span class="pill-sep">·</span><span class="pill-event">' + sanitizeText(p.eventType) + '</span><span class="pill-sep">·</span><span class="pill-price">' + sanitizeText(p.price) + '</span>';
+}
+
+function closeDetailModal() {
+  document.getElementById('svcDetailOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('sdmPrevBtn').addEventListener('click', function() { sdmGoTo(sdm.current - 1); });
+document.getElementById('sdmNextBtn').addEventListener('click', function() { sdmGoTo(sdm.current + 1); });
+document.getElementById('sdmCloseBtn').addEventListener('click', closeDetailModal);
+document.getElementById('sdmBackBtn').addEventListener('click', closeDetailModal);
+
+/* ================================================================
+   FIX: Modal closes when user selects/drags text inside it
+   ================================================================
+   Root cause: when you click inside the modal and drag text to
+   select it, mouseup lands on the overlay, firing a 'click' event
+   with e.target === overlay — which triggered closeDetailModal().
+
+   Fix: track where mousedown started. Only close if BOTH mousedown
+   AND click landed on the backdrop itself, never on a child element.
+   ================================================================ */
+var _svcMdownOnBackdrop  = false;
+var _bookMdownOnBackdrop = false;
+
+var svcOverlay = document.getElementById('svcDetailOverlay');
+svcOverlay.addEventListener('mousedown', function(e) { _svcMdownOnBackdrop = (e.target === svcOverlay); });
+svcOverlay.addEventListener('click', function(e) {
+  if (e.target === svcOverlay && _svcMdownOnBackdrop) closeDetailModal();
+  _svcMdownOnBackdrop = false;
+});
+
+document.getElementById('sdmProceedBtn').addEventListener('click', function() {
+  var p = sdm.pages[sdm.current];
+  goToBookingFrom(SERVICE_DATA[sdm.serviceKey].name, p.eventType, p.title, p.price);
+});
+
+/* BOOKING MODAL */
+function goToBookingFrom(serviceName, eventType, eventTitle, price) {
+  closeDetailModal();
+  setTimeout(function() {
+    document.getElementById('bmChipService').textContent  = sanitizeText(serviceName);
+    document.getElementById('bmChipEvent').textContent    = sanitizeText(eventTitle);
+    document.getElementById('bmChipPrice').textContent    = sanitizeText(price);
+    document.getElementById('bf-selected-service').value = sanitizeText(serviceName);
+    document.getElementById('bf-selected-event').value   = sanitizeText(eventTitle);
+    document.getElementById('bf-selected-price').value   = sanitizeText(price);
+    document.getElementById('bf-service-name').value     = sanitizeText(serviceName);
+    document.getElementById('bf-event-name').value       = sanitizeText(eventTitle);
+    document.getElementById('bf-price').value            = sanitizeText(price);
+    ['bf-fname','bf-lname','bf-email','bf-phone','bf-date','bf-notes','bf-location'].forEach(function(id) { var el = document.getElementById(id); if (el) el.value = ''; });
+    var gc = document.getElementById('bf-guest-count'); if (gc) gc.value = '';
+    clearAllErrors(document.getElementById('bookFormWrap'));
+    var btn = document.getElementById('bookSubmitBtn'); btn.disabled = false; btn.textContent = 'Book Consultation';
+    document.getElementById('bookFormWrap').style.display = 'block';
+    document.getElementById('bookSuccess').classList.remove('show');
+    document.getElementById('bookOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }, 260);
+}
+
+function closeBookModal() {
+  document.getElementById('bookOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('bookCloseBtn').addEventListener('click', closeBookModal);
+document.getElementById('bookBackBtn').addEventListener('click', function() {
+  closeBookModal();
+  setTimeout(function() { document.getElementById('svcDetailOverlay').classList.add('active'); document.body.style.overflow = 'hidden'; }, 260);
+});
+
+/* Same mousedown-tracking fix for booking modal */
+var bookOverlay = document.getElementById('bookOverlay');
+bookOverlay.addEventListener('mousedown', function(e) { _bookMdownOnBackdrop = (e.target === bookOverlay); });
+bookOverlay.addEventListener('click', function(e) {
+  if (e.target === bookOverlay && _bookMdownOnBackdrop) closeBookModal();
+  _bookMdownOnBackdrop = false;
+});
+
+/* BOOKING SUBMISSION */
+function submitBooking() {
+  var btn = document.getElementById('bookSubmitBtn');
+  if (btn.disabled) return;
+  var wrap = document.getElementById('bookFormWrap');
+  clearAllErrors(wrap);
+  var fname = document.getElementById('bf-fname').value.trim();
+  var lname = document.getElementById('bf-lname').value.trim();
+  var email = document.getElementById('bf-email').value.trim();
+  var phone = document.getElementById('bf-phone').value.trim();
+  var location = document.getElementById('bf-location').value.trim();
+  var date  = document.getElementById('bf-date').value;
+  var notes = document.getElementById('bf-notes').value.trim();
+  var gRaw  = document.getElementById('bf-guest-count').value.trim();
+  var guestCount = gRaw !== '' ? parseInt(gRaw, 10) : null;
+  var hasError = false;
+  if (fname.length < 1) { setFieldError(document.getElementById('bf-fname'), 'First name is required.'); hasError = true; }
+  if (lname.length < 1) { setFieldError(document.getElementById('bf-lname'), 'Last name is required.'); hasError = true; }
+  if (!email) { setFieldError(document.getElementById('bf-email'), 'Email is required.'); hasError = true; }
+  else if (!isValidEmail(email)) { setFieldError(document.getElementById('bf-email'), 'Enter a valid email address.'); hasError = true; }
+  if (!phone) { setFieldError(document.getElementById('bf-phone'), 'Contact number is required.'); hasError = true; }
+  else if (!isValidPhone(phone)) { setFieldError(document.getElementById('bf-phone'), 'Enter a valid phone number.'); hasError = true; }
+  if (!date) { setFieldError(document.getElementById('bf-date'), 'Please select a preferred date.'); hasError = true; }
+  else { var sel = new Date(date); var today = new Date(); today.setHours(0,0,0,0); if (sel < today) { setFieldError(document.getElementById('bf-date'), 'Please select a future date.'); hasError = true; } }
+  if (guestCount !== null && (isNaN(guestCount) || guestCount < 1 || guestCount > 9999)) { setFieldError(document.getElementById('bf-guest-count'), 'Enter a realistic guest count (1-9999).'); hasError = true; }
+  if (hasError) return;
+  btn.disabled = true; btn.textContent = 'Submitting...';
+  var payload = { service: sanitizeText(document.getElementById('bf-service-name').value), eventType: sanitizeText(document.getElementById('bf-event-name').value), price: sanitizeText(document.getElementById('bf-price').value), firstName: sanitizeText(fname), lastName: sanitizeText(lname), email: sanitizeText(email), phone: sanitizeText(phone), guestCount: guestCount, location: sanitizeText(location), date: date, notes: sanitizeText(notes) };
+  console.log('Booking payload (ready for n8n):', payload);
+  /* Replace setTimeout with fetch() to your n8n webhook:
+  fetch('https://YOUR_N8N_WEBHOOK_URL', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) })
+  .then(function(r){ if(!r.ok) throw new Error(); showSuccess(); })
+  .catch(function(){ btn.disabled=false; btn.textContent='Book Consultation'; alert('Something went wrong.'); }); */
+  setTimeout(function() {
+    document.getElementById('bookFormWrap').style.display = 'none';
+    document.getElementById('successSvcName').textContent = payload.service + ' — ' + payload.eventType;
+    document.getElementById('bookSuccess').classList.add('show');
+  }, 1000);
+}
+
+/* CONTACT FORM */
+function submitContactForm() {
+  var btn = document.getElementById('contactSubmitBtn');
+  var fname = document.getElementById('fname').value.trim();
+  var lname = document.getElementById('lname').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var phone = document.getElementById('phone').value.trim();
+  if (fname.length < 1) { alert('Please enter a valid first name.'); return; }
+  if (lname.length < 1) { alert('Please enter a valid last name.'); return; }
+  if (!isValidEmail(email)) { alert('Please enter a valid email address.'); return; }
+  if (!isValidPhone(phone)) { alert('Please enter a valid phone number.'); return; }
+  btn.disabled = true; btn.textContent = 'Sending...';
+  setTimeout(function() { alert("Thank you! We'll be in touch soon."); btn.disabled = false; btn.textContent = 'Send Message'; }, 1000);
+}
+
+/* NAV */
+var nav = document.getElementById('main-nav');
+var navBrand = document.getElementById('navBrand');
+var homeSection = document.getElementById('home');
+function checkNav() {
+  navBrand.classList.toggle('visible', window.scrollY >= homeSection.offsetHeight * 0.8);
+  nav.classList.toggle('scrolled', window.scrollY > 30);
+}
+window.addEventListener('scroll', checkNav);
+checkNav();
+document.getElementById('hamburger').addEventListener('click', function() { document.getElementById('mobile-menu').classList.toggle('open'); });
+function closeMobile() { document.getElementById('mobile-menu').classList.remove('open'); }
+
+/* SCROLL REVEAL */
+var revealObs = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
+
+/* TESTIMONIALS CAROUSEL (auto-play) */
+(function() {
+  var track = document.getElementById('testiTrack');
+  var slides = track.querySelectorAll('.testi-slide');
+  var dotsWrap = document.getElementById('testiDots');
+  var current = 0, timer;
+  slides.forEach(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'testi-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Slide ' + (i + 1));
+    d.addEventListener('click', function() { go(i); });
+    dotsWrap.appendChild(d);
+  });
+  function go(idx) {
+    current = (idx + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dotsWrap.querySelectorAll('button').forEach(function(d, i) { d.classList.toggle('active', i === current); });
+    clearInterval(timer); timer = setInterval(function() { go(current + 1); }, 5000);
+  }
+  document.getElementById('testiPrevBtn').addEventListener('click', function() { go(current - 1); });
+  document.getElementById('testiNextBtn').addEventListener('click', function() { go(current + 1); });
+  timer = setInterval(function() { go(current + 1); }, 5000);
+})();
+
+/* ESC TO CLOSE */
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeDetailModal(); closeBookModal(); } });
+
+/* INITIALISE ON LOAD */
+renderPortfolio();   // builds portfolio slides from PORTFOLIO_DATA
+initServiceCards();  // syncs card price badges + titles from SERVICE_DATA
+</script>
+</body>
+</html>
