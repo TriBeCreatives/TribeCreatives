@@ -31,53 +31,6 @@ function clearAllErrors(container) {
    Your photo always fills the frame at the same size regardless of
    its original dimensions. No stretching, no gaps.
    ================================================================ */
-const PORTFOLIO_DATA = [
-
-  {
-    src:       'assets/Services/s-photobooth-1.jpg', // path to your image
-    eventType: 'Family Portrait',    // gold label shown top-left of slide
-    title:     'Studio Booth / Photobooth', // white title shown below label
-    bg:        '#1d1520'             // background colour while image loads
-  },
-
-  {
-    src:       'assets/Services/s-backdrop-3.jpg', // path to your image
-    eventType: 'Birthday',    // gold label shown top-left of slide
-    title:     'Backdrop / Photo Booth', // white title shown below label
-    bg:        '#1d1520'             // background colour while image loads
-  },
-  {
-    src:       'assets/Services/s-refreshment-1.jpg', // path to your image
-    eventType: 'Refreshment Birthday Cake / Dessert',    // gold label shown top-left of slide
-    title:     'Cake / Dessert', // white title shown below label
-    bg:        '#1d1520'             // background colour while image loads
-  },
-  {
-    src:       'assets/Services/s-backdrop-closeup-2.jpg', // path to your image
-    eventType: 'Wedding',    // gold label shown top-left of slide
-    title:     'Full Event Setup / Stage Stup', // white title shown below label
-    bg:        '#1d1520'             // background colour while image loads
-  },
-  {
-    src:       'assets/Services/s-stage-setup-2.jpg', // path to your image
-    eventType: 'Birthday',    // gold label shown top-left of slide
-    title:     'Stage Setup', // white title shown below label
-    bg:        '#1d1520'             // background colour while image loads
-  },
-  {
-    src:       'assets/Services/s-backdrop-6.jpg', // path to your image
-    eventType: 'Birthday',    // gold label shown top-left of slide
-    title:     'Backdrop Decorations', // white title shown below label
-    bg:        '#1d1520'             // background colour while image loads
-  },
-    {
-    src:       'assets/Portfolio/temp-image-path.jpg', // path to your image
-    eventType: 'Birthday',    // gold label shown top-left of slide
-    title:     'Backdrop Decorations', // white title shown below label
-    bg:        '#1d1520'             // background colour while image loads
-  },
-  // NEW_PROJECT_OBJECT_HERE
-];
 
   /*HERE'S THE LINE OF NEW IMAGES*/
 
