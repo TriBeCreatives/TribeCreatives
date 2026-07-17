@@ -1,4 +1,3 @@
-<script>
 /* SECURITY HELPERS */
 function sanitizeText(str) { const d = document.createElement('div'); d.textContent = str; return d.textContent; }
 function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email); }
@@ -14,7 +13,6 @@ function clearAllErrors(container) {
   container.querySelectorAll('.field-error-msg').forEach(e => e.remove());
 }
 
-/* This is where to add the new image for the portfolio */
 /* ================================================================
    PORTFOLIO DATA — YOUR ONLY EDIT POINT FOR PORTFOLIO SLIDES
    ================================================================
@@ -31,8 +29,6 @@ function clearAllErrors(container) {
    Your photo always fills the frame at the same size regardless of
    its original dimensions. No stretching, no gaps.
    ================================================================ */
-
-  /*HERE'S THE LINE OF NEW IMAGES*/
 
 /* Builds all slides from PORTFOLIO_DATA and wires up the carousel.
    Called once on page load — do not call manually. */
@@ -453,4 +449,3 @@ document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { clo
 /* INITIALISE ON LOAD */
 renderPortfolio();   // builds portfolio slides from PORTFOLIO_DATA
 initServiceCards();  // syncs card price badges + titles from SERVICE_DATA
-</script>
