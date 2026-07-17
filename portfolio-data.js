@@ -11,4 +11,6 @@ const PORTFOLIO_DATA = [
     title: 'Wedding Setup',
     bg: '#1d1520'
   }
+
+  // This where the new content will be stored
 ];
