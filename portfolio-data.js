@@ -44,12 +44,7 @@ const PORTFOLIO_DATA = [
   //   title:     'Garden Elegance',
   //   bg:        '#1a2e20'
   // },
-  // {
-  //   src:       'assets/Portfolio/another-photo.jpg',
-  //   eventType: 'Debut',
-  //   title:     'Golden Night',
-  //   bg:        '#1e1525'
-  // },
+
   // -----------------------------------------------------------------
  
 ];
